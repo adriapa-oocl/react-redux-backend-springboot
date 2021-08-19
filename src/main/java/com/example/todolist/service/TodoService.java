@@ -23,18 +23,25 @@ public class TodoService {
         return todoRepository.save(todo);
     }
 
-//    public Todo updateTodo(Integer id, Todo todoInfo) {
-//        Todo updateTodo = todoRepository.findById(id)
-//                .map(todo -> updateTodoInfo(todo, todoInfo))
-//                .get();
-//        return todoRepository.save(updateTodo);
-//    }
-
-    public Todo updateTodo(Integer id, Todo todoInfo) {
-        Todo updateTodo = todoRepository.findById(id).orElse(null);
-        updateTodo.setDone(todoInfo.getDone());
+    public Todo updateTodoDone(Integer id, Todo todoInfo) {
+        Todo updateTodo = todoRepository.findById(id)
+                .map(todo -> updateTodoInfo(todo, todoInfo))
+                .get();
         return todoRepository.save(updateTodo);
     }
+
+//    public Todo updateTodoDone(Integer id, Todo todoInfo) {
+//        Todo updateTodoDone = todoRepository.findById(id).orElse(null);
+//        updateTodoDone.setDone(todoInfo.getDone());
+//        return todoRepository.save(updateTodoDone);
+//    }
+
+//    public Todo updateTodoText(Integer id, Todo todoInfo) {
+//        Todo updateTodoText = todoRepository.findById(id)
+//                .map(todo -> updateTodoTextInfo(todo, todoInfo))
+//                .get();
+//        return todoRepository.save(updateTodoText);
+//    }
 
     public Todo removeTodo(Integer id) {
         Optional<Todo> removeTodo = todoRepository.findById(id);
@@ -42,9 +49,14 @@ public class TodoService {
         return removeTodo.orElse(null);
     }
 
-//    private Todo updateTodoInfo(Todo todo, Todo todoInfo) {
-//        todo.setDone(todoInfo.getDone());
-//        return todo;
-//    }
+    private Todo updateTodoInfo(Todo todo, Todo todoInfo) {
+        if(todo.getDone() != todoInfo.getDone()){
+            todo.setDone(todoInfo.getDone());
+        }
+        if (todoInfo.getText() != null){
+            todo.setText(todoInfo.getText());
+        }
+        return todo;
+    }
 
 }
