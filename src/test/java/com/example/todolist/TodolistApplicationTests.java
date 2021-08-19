@@ -47,6 +47,7 @@ class TodolistApplicationTests {
 		final Todo savedTodo = todoService.addTodo(todo);
 
 		String updateTodo = "{\n" +
+				"    \"text\": \"dummy\",\n" +
 				"    \"done\": true\n" +
 				"}";
 
@@ -54,7 +55,8 @@ class TodolistApplicationTests {
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(updateTodo))
 				.andExpect(status().isOk())
-				.andExpect(jsonPath("$.done").value(true));
+				.andExpect(jsonPath("$.done").value(true))
+				.andExpect(jsonPath("$.text").value("dummy"));
 		
 		todoService.removeTodo(savedTodo.getId());
 	}
