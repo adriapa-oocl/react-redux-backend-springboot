@@ -55,6 +55,18 @@ class TodolistApplicationTests {
 				.content(updateTodo))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.done").value(true));
+		
+		todoService.removeTodo(savedTodo.getId());
+	}
 
+	@Test
+	void should_remove_todo_when_removeTodo_given_todo_id()throws Exception{
+		final Todo todo = new Todo(99, "dummy test todo", false);
+		final Todo savedTodo = todoService.addTodo(todo);
+
+		mockMvc.perform(MockMvcRequestBuilders.delete("/todos/{id}", savedTodo.getId())
+				.contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk());
 	}
 }
