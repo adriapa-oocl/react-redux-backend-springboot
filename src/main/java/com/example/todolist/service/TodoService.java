@@ -23,10 +23,16 @@ public class TodoService {
         return todoRepository.save(todo);
     }
 
+//    public Todo updateTodo(Integer id, Todo todoInfo) {
+//        Todo updateTodo = todoRepository.findById(id)
+//                .map(todo -> updateTodoInfo(todo, todoInfo))
+//                .get();
+//        return todoRepository.save(updateTodo);
+//    }
+
     public Todo updateTodo(Integer id, Todo todoInfo) {
-        Todo updateTodo = todoRepository.findById(id)
-                .map(todo -> updateTodoInfo(todo, todoInfo))
-                .get();
+        Todo updateTodo = todoRepository.findById(id).orElse(null);
+        updateTodo.setDone(todoInfo.getDone());
         return todoRepository.save(updateTodo);
     }
 
@@ -36,9 +42,9 @@ public class TodoService {
         return removeTodo.orElse(null);
     }
 
-    private Todo updateTodoInfo(Todo todo, Todo todoInfo) {
-        todo.setDone(todoInfo.getDone());
-        return todo;
-    }
+//    private Todo updateTodoInfo(Todo todo, Todo todoInfo) {
+//        todo.setDone(todoInfo.getDone());
+//        return todo;
+//    }
 
 }
