@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -27,4 +28,15 @@ class TodolistApplicationTests {
 				.andExpect(jsonPath("$.[*]").isNotEmpty());
 	}
 
+	@Test
+	void should_create_todo_when_addTodo_given_todo_information() throws Exception {
+		String todo = "{\n" +
+				"    \"text\": \"dummy todo\"\n" +
+				"}";
+
+		mockMvc.perform(MockMvcRequestBuilders.post("/todos")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(todo))
+				.andExpect(status().isCreated());
+	}
 }
