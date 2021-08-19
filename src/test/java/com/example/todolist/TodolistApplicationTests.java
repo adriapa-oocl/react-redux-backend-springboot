@@ -1,5 +1,6 @@
 package com.example.todolist;
 
+import com.example.todolist.entity.Todo;
 import com.example.todolist.service.TodoService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,5 +39,22 @@ class TodolistApplicationTests {
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(todo))
 				.andExpect(status().isCreated());
+	}
+
+	@Test
+	void should_update_todo_when_updateTodo_given_todo_information() throws Exception {
+		final Todo todo = new Todo(99, "dummy test todo", false);
+		final Todo savedTodo = todoService.addTodo(todo);
+
+		String updateTodo = "{\n" +
+				"    \"done\": true\n" +
+				"}";
+
+		mockMvc.perform(MockMvcRequestBuilders.put("/todos/{id}", savedTodo.getId())
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(updateTodo))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.done").value(true));
+
 	}
 }
