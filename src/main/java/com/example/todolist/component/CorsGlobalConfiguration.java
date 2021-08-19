@@ -1,4 +1,4 @@
-package com.example.todolist.cors;
+package com.example.todolist.component;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
