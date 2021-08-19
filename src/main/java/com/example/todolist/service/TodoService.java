@@ -21,4 +21,17 @@ public class TodoService {
     public Todo addTodo(Todo todo) {
         return todoRepository.save(todo);
     }
+
+    public Todo updateTodo(Integer id, Todo todoInfo) {
+        Todo updateTodo = todoRepository.findById(id)
+                .map(todo -> updateTodoInfo(todo, todoInfo))
+                .get();
+        return todoRepository.save(updateTodo);
+    }
+
+    private Todo updateTodoInfo(Todo todo, Todo todoInfo) {
+        todo.setDone(todoInfo.getDone());
+        return todo;
+    }
+
 }
